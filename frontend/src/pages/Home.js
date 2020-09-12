@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,6 +11,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import yellow from '@material-ui/core/colors/yellow';
 import grey from '@material-ui/core/colors/grey';
 import Container from '@material-ui/core/Container';
+import Alert from '@material-ui/lab/Alert';
+import axios from 'axios';
 
 function Footer() {
   return (
@@ -24,7 +26,7 @@ function Footer() {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(10),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -49,8 +51,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function Home() {
   const classes = useStyles();
+  const [url, setUrl] = useState('');
+  const [exploreError, setExploreError] = useState(false);
+
+  const handleChange = (e) => {
+    setUrl(e.target.value);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // TODO
+    // Send the URL to the server
+    let _url = url;
+    if (url.indexOf("http") !== -1) {
+      _url = new URL(url);
+      _url = _url.hostname;
+    }
+    axios.post(`/?url=${_url}`)
+    .then(res => {
+      console.log(res.data);
+    }).catch(() => {
+      setExploreError(true);
+    });
+  }
 
   return (
     <Container component="main" maxWidth="sm">
@@ -60,21 +85,23 @@ export default function SignIn() {
           <FolderIcon />
         </Avatar>
         <Typography component="h1" variant="h5" className={classes.title}>
-            WPRestPanel
+          WPRestPanel
         </Typography>
         <Typography component="h2" variant="h6" className={classes.subtitle}>
-            Explore WordPress Sites using metadata
+          Explore WordPress Sites using metadata
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <TextField
             variant="outlined"
             margin="normal"
             fullWidth
-            id="email"
+            id="url"
             label="Wordpress Website URL"
-            name="email"
-            autoComplete="email"
+            name="url"
+            placeholder="https://example.com or example.com"
             autoFocus
+            value={url}
+            onChange={handleChange}
           />
           <Button
             type="submit"
@@ -82,11 +109,21 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Explore
           </Button>
         </form>
       </div>
+      {exploreError ? (
+        <Box mt={4}>
+          <Alert severity="error">
+            Sorry! <strong>{url}</strong> is not am explorable WordPress installation.
+          </Alert>
+        </Box>
+      ) : (
+        ""
+      )}
       <Box mt={8}>
         <Footer />
       </Box>
