@@ -13,6 +13,7 @@ import grey from '@material-ui/core/colors/grey';
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
 import axios from 'axios';
+import Config from '../config';
 
 function Footer() {
   return (
@@ -62,16 +63,14 @@ export default function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO
-    // Send the URL to the server
-    let _url = url;
-    if (url.indexOf("http") !== -1) {
-      _url = new URL(url);
-      _url = _url.hostname;
-    }
-    axios.post(`/?url=${_url}`)
+    axios.post(`${Config.apiBase}/onboard`, {site_url: url})
     .then(res => {
-      console.log(res.data);
+      if (res.data.is_wp_site) {
+        // TODO
+        // Load up the second page
+      } else {
+        setExploreError(true);
+      }
     }).catch(() => {
       setExploreError(true);
     });
@@ -92,13 +91,13 @@ export default function Home() {
         </Typography>
         <form className={classes.form}>
           <TextField
+            type="url"
             variant="outlined"
             margin="normal"
             fullWidth
             id="url"
             label="Wordpress Website URL"
             name="url"
-            placeholder="https://example.com or example.com"
             autoFocus
             value={url}
             onChange={handleChange}
