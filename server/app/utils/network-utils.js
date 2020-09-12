@@ -8,6 +8,9 @@ function getPage(url) {
     }
   }).then(function (response) {
     return response.data;
+  }).catch(function (err) {
+    console.log('err in getPage()', err);
+    return null;
   });
 }
 
