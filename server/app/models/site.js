@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let schema = new Schema({
+const schema = new Schema({
   host_name: {
     lowercase: true,
     trim: true,
@@ -19,12 +19,12 @@ let schema = new Schema({
     default: Date.now
   },
   updated_at: {
-    select: false,
+    select: true,
     type: Date,
     default: Date.now
   }
 });
 
-mongoose.model('user', schema);
+mongoose.model('site', schema);
 
 module.exports = schema;

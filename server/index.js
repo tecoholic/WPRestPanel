@@ -11,9 +11,7 @@ if (dotenv.error) {
 }
 
 const { PORT } = process.env;
-
 const connectionFactory = require('./app/boot/connection-factory');
-const server = require('./app/boot/build-server');
 
 connectionFactory.connect().then((info) => {
   console.log('Connecting DB ', chalk.blue(info));
@@ -21,6 +19,7 @@ connectionFactory.connect().then((info) => {
   const models = require('./app/models');// eslint-disable-line global-require
   return models.init();
 }).then(() => {
+  const server = require('./app/boot/build-server');
   return server.start();
 }).then((info) => {
   console.log(`Starting Server at ${chalk.green(PORT)}`, chalk.blue(info));

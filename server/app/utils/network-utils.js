@@ -14,6 +14,12 @@ function getPage(url) {
   });
 }
 
+function getHostName(url) {
+  const site = new URL(url)
+  return site.hostname;
+}
+
 module.exports = {
-  getPage
+  getPage,
+  getHostName
 };
