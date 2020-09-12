@@ -68,7 +68,7 @@ export default function Home() {
     axios.post(`${Config.apiBase}/onboard`, {site_url: url})
     .then(res => {
       if (res.data.is_wp_site) {
-        history.push(`/explorer/${encodeURIComponent(res.data.site_url || url)}`);
+        history.push(`/explorer/${encodeURIComponent(res.data.site_url)}`);
       } else {
         setExploreError(true);
       }
