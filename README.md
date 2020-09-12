@@ -18,9 +18,9 @@ The frontend application should be served at http://localhost:3000
 
 ### Server
 
-Install the dependencies
+Navigate into the server folder and install all the dependencies
 
-    npm i
+    cd server && npm i
 
 Start the server
 
@@ -28,3 +28,5 @@ Start the server
     
     
 You can access the server http://api.localhost.com:9000/
+
+API endpoints are documented in `WpRestPanel.postman_collection.json`
