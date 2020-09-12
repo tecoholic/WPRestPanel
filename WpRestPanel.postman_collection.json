@@ -1,0 +1,45 @@
+{
+	"info": {
+		"_postman_id": "a22eeafd-62de-4b7c-9f40-0be813df1628",
+		"name": "WpRestPanel",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST Onboard",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"site_url\":\"http://bcfi.org.in/\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "api.localhost:7000/onboard",
+					"host": [
+						"api",
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"onboard"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

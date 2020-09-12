@@ -19,4 +19,20 @@ app.get('/', (req, res) => {
   });
 });
 
+app.use('/onboard', require('./routes/onboard-route'));
+
+app.use(function (err, req, res, next) {
+  console.log(88888)
+  if (err instanceof NotFound) {
+    res.status(404).send({
+      msg: 'API not found!'
+    });
+  } else {
+    console.log(err.stack);
+    res.status(500).send({
+      msg: 'Something broke!'
+    });
+  }
+});
+
 module.exports = app;
