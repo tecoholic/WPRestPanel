@@ -14,6 +14,7 @@ import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
 import axios from 'axios';
 import Config from '../config';
+import {useHistory} from 'react-router-dom';
 
 function Footer() {
   return (
@@ -56,6 +57,7 @@ export default function Home() {
   const classes = useStyles();
   const [url, setUrl] = useState('');
   const [exploreError, setExploreError] = useState(false);
+  const history = useHistory();
 
   const handleChange = (e) => {
     setUrl(e.target.value);
@@ -66,8 +68,7 @@ export default function Home() {
     axios.post(`${Config.apiBase}/onboard`, {site_url: url})
     .then(res => {
       if (res.data.is_wp_site) {
-        // TODO
-        // Load up the second page
+        history.push(`/explorer/${encodeURIComponent(res.data.site_url || url)}`);
       } else {
         setExploreError(true);
       }
